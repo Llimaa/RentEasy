@@ -2,6 +2,7 @@
 using Flunt.Validations;
 using RentEasy.Domain.ValueObjects;
 using RentEasy.Shared.Commands;
+using System;
 
 namespace RentEasy.Domain.Commands.Create
 {
@@ -14,6 +15,7 @@ namespace RentEasy.Domain.Commands.Create
         public CreateProfileCommand(
           string name,
           string phone,
+          Guid userId,
           string street,
           string number,
           string neighborhood,
@@ -24,6 +26,7 @@ namespace RentEasy.Domain.Commands.Create
         {
             Name = name;
             Phone = phone;
+            UserId = userId;
             Street = street;
             Number = number;
             Neighborhood = neighborhood;
@@ -34,6 +37,7 @@ namespace RentEasy.Domain.Commands.Create
 
         public string Name { get; set; }
         public string Phone { get; set; }
+        public Guid UserId { get; set; }
         public string Street { get; set; }
         public string Number { get; set; }
         public string Neighborhood { get; set; }

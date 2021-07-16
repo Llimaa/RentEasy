@@ -27,7 +27,7 @@ namespace RentEasy.Domain.Handlers
             if (command.Invalid)
                 return new GenericCommandResult(false, "Não foi possivel cadastrar seu perfil!", command.Notifications);
             var address = new Address(command.Street, command.Number, command.Neighborhood, command.City, command.State, command.ZipCode);
-            var profile = new Profile(command.Name, command.Phone, address);
+            var profile = new Profile(command.Name, command.Phone, address, command.UserId);
 
             _profileRepository.Create(profile);
 

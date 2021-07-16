@@ -5,6 +5,10 @@ namespace RentEasy.Domain.Entities
 {
     public class Photo : Entity
     {
+        public Photo()
+        {
+
+        }
         public Photo(string data, string format, Guid houseId)
         {
             Data = data;

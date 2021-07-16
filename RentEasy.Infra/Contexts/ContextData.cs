@@ -12,6 +12,7 @@ namespace RentEasy.Infra.Contexts
             modelBuilder.ApplyConfiguration(new PhotoMap());
             modelBuilder.ApplyConfiguration(new ProfileMap());
             modelBuilder.ApplyConfiguration(new TenantMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
         }
     }
 }

@@ -13,5 +13,6 @@ namespace RentEasy.Infra.Contexts
         public DbSet<Photo> Photo { get; set; }
         public DbSet<Profile> Profile { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

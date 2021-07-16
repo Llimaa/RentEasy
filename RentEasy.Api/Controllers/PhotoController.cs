@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentEasy.Domain.Commands.Create;
 using RentEasy.Domain.Commands.Update;
 using RentEasy.Domain.Handlers;
@@ -23,6 +24,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("")]
         [HttpGet]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> GetById([FromHeader] Guid id)
         {
             var result = await _photoRepository.GetById(id);
@@ -31,6 +33,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("house")]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPhotoByHouseId([FromHeader] Guid id)
         {
             var result = await _photoRepository.GetAllPhotoByHouseId(id);
@@ -39,6 +42,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("")]
         [HttpPost]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> Post(CreatePhotoCommand createPhoto)
         {
             var result = await _photoHandler.Handler(createPhoto);
@@ -47,6 +51,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("")]
         [HttpPut]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> Put(UpdatePhotoCommand updatePhoto)
         {
             var result = await _photoHandler.Handler(updatePhoto);
@@ -55,6 +60,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("")]
         [HttpDelete]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> Delete(DeletePhoyoCommand deletePhoyo)
         {
             var result = await _photoHandler.Handler(deletePhoyo);

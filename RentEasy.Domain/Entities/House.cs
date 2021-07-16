@@ -12,6 +12,10 @@ namespace RentEasy.Domain.Entities
 
         private IList<Photo> _photos;
 
+        public House()
+        {
+
+        }
         public House(string descricao, decimal rentAmount, Address address, Guid profileId)
         {
             Descricao = descricao;

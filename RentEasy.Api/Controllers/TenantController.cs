@@ -1,4 +1,5 @@
 ﻿using Flunt.Notifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentEasy.Domain.Commands.Create;
 using RentEasy.Domain.Commands.Update;
@@ -25,6 +26,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("")]
         [HttpGet]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> GetById([FromHeader] Guid id)
         {
             var result = await _tenantRepository.GetById(id);
@@ -34,6 +36,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("")]
         [HttpPost]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> Post(CreateTenantCommand createTenant)
         {
             var exiteTenantByHouseId = await _tenantRepository.ExisteTenantByHouseId(createTenant.HouseId);
@@ -48,6 +51,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("")]
         [HttpPut]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> Update(UpdateTenantCommand updateTenant)
         {
             var result = await _tenantHandler.Handler(updateTenant);
@@ -56,6 +60,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("desactive")]
         [HttpPatch]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> Desactive(UpdateTenantExitCommand updateTenant)
         {
             var result = await _tenantHandler.Handler(updateTenant);
@@ -64,6 +69,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("status-payment")]
         [HttpPatch]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> UpdateStatusPayment(UpdateStatusPaymentTenantCommand updateTenant)
         {
             var result = await _tenantHandler.Handler(updateTenant);
@@ -72,12 +78,11 @@ namespace RentEasy.Api.Controllers
 
         [Route("last-payment")]
         [HttpPatch]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> UpdateTenantLastPayment(UpdateTenantLastPaymentDateCommand updateTenant)
         {
             var result = await _tenantHandler.Handler(updateTenant);
             return Ok(result);
         }
-
-
     }
 }

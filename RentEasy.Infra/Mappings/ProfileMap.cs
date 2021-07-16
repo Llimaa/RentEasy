@@ -24,6 +24,8 @@ namespace RentEasy.Infra.Mappings
               });
 
             builder.HasMany(e => e.Houses).WithOne(e => e.Profile).HasForeignKey(e => e.ProfileId).IsRequired();
+            builder.Property(e => e.IdUser).HasColumnType("uniqueidentifier").IsRequired();
+            builder.HasOne(e => e.User).WithOne(e => e.Profile).HasForeignKey<Profile>(e => e.IdUser).IsRequired(true);
         }
     }
 }

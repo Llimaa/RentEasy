@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RentEasy.Domain.Commands.Create;
 using RentEasy.Domain.Commands.Update;
 using RentEasy.Domain.Handlers;
@@ -24,6 +25,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("")]
         [HttpGet]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> GetById([FromHeader] Guid id)
         {
             var result = await _profileRepository.GetById(id);
@@ -32,6 +34,7 @@ namespace RentEasy.Api.Controllers
 
         [Route("houses")]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetHousersByIdProfile([FromHeader] Guid id)
         {
             var result = await _profileRepository.GetById(id);
@@ -40,14 +43,17 @@ namespace RentEasy.Api.Controllers
 
         [Route("")]
         [HttpPost]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> Post([FromBody] CreateProfileCommand createProfile)
         {
+
             var result = await _profileHandler.Handler(createProfile);
             return Ok(result);
         }
 
         [Route("")]
         [HttpPut]
+        [Authorize(Roles = "admin,user")]
         public async Task<IActionResult> PUT([FromBody] UpdateProfileCommand updateProfile)
         {
             var result = await _profileHandler.Handler(updateProfile);
