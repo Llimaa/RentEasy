@@ -20,6 +20,10 @@ namespace RentEasy.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseSentry(o =>
+                    {
+                        o.Dsn = "Dsn";
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }

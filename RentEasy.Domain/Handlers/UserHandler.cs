@@ -1,5 +1,6 @@
 ﻿using Flunt.Notifications;
 using RentEasy.Domain.Commands.Auth;
+using RentEasy.Domain.Commands.Result;
 using RentEasy.Domain.Entities;
 using RentEasy.Domain.Repositories;
 using RentEasy.Domain.ValueObjects;
@@ -38,9 +39,9 @@ namespace RentEasy.Domain.Handlers
 
             _userRepository.Create(user);
 
-            user.CreanPassword();
+            var result = new UserResultCommand(command.Email, command.Role, user.Status);
 
-            return new GenericCommandResult(true, "Dados do usuário cadastrado com sucesso", user);
+            return new GenericCommandResult(true, "Dados do usuário cadastrado com sucesso", result);
         }
 
         public async Task<ICommandResult> Handler(LoginUserCommand command)
@@ -60,6 +61,8 @@ namespace RentEasy.Domain.Handlers
                 return new GenericCommandResult(false, "Usuário ou senha inválidos");
 
             user.CreanPassword();
+           
+
             return new GenericCommandResult(true, "Usuário Autenticado", user);
         }
 
@@ -79,7 +82,9 @@ namespace RentEasy.Domain.Handlers
             user.Password.update(command.NewPassword);
             _userRepository.AlterPassword(user);
             user.CreanPassword();
-            return new GenericCommandResult(true, "Senha atualizada com sucesso", user);
+            var result = new UserResultCommand(command.Email, user.Role, user.Status);
+
+            return new GenericCommandResult(true, "Senha atualizada com sucesso", result);
         }
     }
 }

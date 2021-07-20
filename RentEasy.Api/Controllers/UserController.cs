@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RentEasy.Api.Services;
 using RentEasy.Domain.Commands.Auth;
+using RentEasy.Domain.Commands.Result;
 using RentEasy.Domain.Entities;
 using RentEasy.Domain.Handlers;
 using RentEasy.Domain.Repositories;
@@ -41,10 +42,11 @@ namespace RentEasy.Api.Controllers
                 return NotFound(new { message = "Usuário ou senha inválidos" });
 
             var token = TokenService.GenerateToken(user);
-            user.CreanPassword();
+  
+            var resultUser = new UserResultCommand(command.Email, user.Role, user.Status);
             var auth = new
             {
-                user = user,
+                user = resultUser,
                 token = token
             };
             return new GenericCommandResult(true, "Usuário Autenticado", auth);
